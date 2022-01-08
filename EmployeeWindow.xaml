@@ -1,0 +1,162 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Jacques_Gourmand"
+        xmlns:RestaurantModel="clr-namespace:RestaurantModel;assembly=RestaurantModel" x:Class="Jacques_Gourmand.EmployeeWindow"
+        mc:Ignorable="d"
+        Title="EmployeeWindow" Height="462" Width="803.2" Loaded="Window_Loaded">
+    <Window.Resources>
+        <CollectionViewSource x:Key="meniuViewSource" d:DesignSource="{d:DesignInstance {x:Type RestaurantModel:Meniu}, CreateList=True}"/>
+        <CollectionViewSource x:Key="angajatiViewSource" d:DesignSource="{d:DesignInstance {x:Type RestaurantModel:Angajati}, CreateList=True}"/>
+        <CollectionViewSource x:Key="comenziViewSource" d:DesignSource="{d:DesignInstance {x:Type RestaurantModel:Comenzi}, CreateList=True}"/>
+    </Window.Resources>
+    <Grid Background="#FFE7DCDE">
+        <TabControl HorizontalAlignment="Left" Height="433" VerticalAlignment="Top" Width="797" Margin="0,0,-0.2,-0.2" BorderBrush="#FFFFFEFE">
+            <TabItem Header="TabItem" Foreground="White" BorderBrush="White" Margin="-2,-2,91.4,-3.8">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="#FFE7DCDE" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <Grid Background="#FFE7DCDE" DataContext="{StaticResource comenziViewSource}" Margin="-1,-26,3.2,-2.4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40*"/>
+                        <ColumnDefinition Width="137*"/>
+                        <ColumnDefinition Width="614*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image HorizontalAlignment="Left" Height="77" Margin="10,12,0,0" VerticalAlignment="Top" Width="94" Source="C:\Users\Andreea\source\repos\pics\pasta.jpg" Grid.ColumnSpan="2"/>
+                    <Image HorizontalAlignment="Left" Height="79" Margin="79.2,10,0,0" VerticalAlignment="Top" Width="101" Grid.ColumnSpan="2" Source="C:\Users\Andreea\source\repos\pics\pizza.jpg" Grid.Column="1"/>
+                    <Image HorizontalAlignment="Left" Height="79" Margin="70.2,10,0,0" VerticalAlignment="Top" Width="109" Grid.Column="2" Source="C:\Users\Andreea\source\repos\pics\pulpe.jpg"/>
+                    <Image HorizontalAlignment="Left" Height="79" Margin="208.2,10,0,0" VerticalAlignment="Top" Width="107" Grid.Column="2" Source="C:\Users\Andreea\source\repos\pics\snitel.jpg"/>
+                    <Image Height="76" Margin="10,149,0,0" VerticalAlignment="Top" Source="C:\Users\Andreea\source\repos\pics\cburta.jpg" RenderTransformOrigin="0.463,0.136" HorizontalAlignment="Left" Width="78" Grid.ColumnSpan="2"/>
+                    <Image HorizontalAlignment="Left" Height="76" Margin="79.2,149,0,0" VerticalAlignment="Top" Width="101" Source="C:\Users\Andreea\source\repos\pics\ctaraneasca.jpg" Grid.ColumnSpan="2" RenderTransformOrigin="0.518,0.918" Grid.Column="1"/>
+                    <Image HorizontalAlignment="Left" Height="77" Margin="10,278,0,0" VerticalAlignment="Top" Width="46" Source="C:\Users\Andreea\source\repos\pics\apa.jpg" Grid.ColumnSpan="2"/>
+                    <Image HorizontalAlignment="Left" Height="77" Margin="84.2,278,0,0" VerticalAlignment="Top" Width="63" Source="C:\Users\Andreea\source\repos\pics\bere.jpg" Grid.ColumnSpan="2" Grid.Column="1"/>
+                    <Image HorizontalAlignment="Left" Height="77" Margin="69.2,278,0,0" VerticalAlignment="Top" Width="110" Source="C:\Users\Andreea\source\repos\pics\suc.jpg" Grid.Column="2"/>
+                    <TextBox x:Name="bucatipaste1" HorizontalAlignment="Left" Height="18" Margin="13,117,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="43" Grid.ColumnSpan="2">
+
+                    </TextBox>
+                    <Button x:Name="paste1" Content="Adauga" HorizontalAlignment="Left" Margin="25.2,96,0,0" VerticalAlignment="Top" Width="54" Height="31" Click="paste_click" Background="Crimson" BorderBrush="Crimson" Grid.Column="1">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="15"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <DataGrid x:Name="gridbon1" Grid.Column="2" HorizontalAlignment="Left" Height="140" Margin="239.2,149,0,0" VerticalAlignment="Top" Width="343" AutomationProperties.IsRowHeader="True" RowBackground="#FFE7DCDE" EnableRowVirtualization="False" IsSynchronizedWithCurrentItem="False" MaxColumnWidth="300" MinColumnWidth="80" BorderBrush="#FFE7DCDE" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="produs1"  Header="Produs" Width="SizeToHeader" Binding="{Binding produse}"/>
+                            <DataGridTextColumn x:Name="cantitate1"  Header="Cantitate" Width="SizeToHeader" Binding="{Binding cantitate}"/>
+                            <DataGridTextColumn x:Name="pret1" Header="Pret" Width="SizeToHeader" Binding="{Binding pret}"/>
+                        </DataGrid.Columns>
+                        <DataGrid.RowDetailsTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Details}"/>
+                            </DataTemplate>
+                        </DataGrid.RowDetailsTemplate>
+
+
+                    </DataGrid>
+                    <TextBox x:Name="pretpaste1" HorizontalAlignment="Left" Height="16" Margin="13,96,0,0" TextWrapping="Wrap" Text="18" VerticalAlignment="Top" Width="30" IsEnabled="False" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="pretpizza1" HorizontalAlignment="Left" Height="16" Margin="94.2,98,0,0" TextWrapping="Wrap" Text="20" VerticalAlignment="Top" Width="29" IsEnabled="False" Grid.Column="1"/>
+                    <TextBox x:Name="bucatipizza1" HorizontalAlignment="Left" Height="19" Margin="94.2,116,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="43" Grid.ColumnSpan="2" Grid.Column="1"/>
+                    <Button x:Name="pizza1" Content="Adauga" Grid.Column="2" HorizontalAlignment="Left" Margin="5.2,94,0,0" VerticalAlignment="Top" Width="57" Height="33" Click="pizza_click" Background="Crimson" BorderBrush="Crimson">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="15"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <TextBox x:Name="pretpulpe1" HorizontalAlignment="Left" Height="16" Margin="70.2,96,0,0" TextWrapping="Wrap" Text="29" VerticalAlignment="Top" Width="29" IsEnabled="False" Grid.Column="2"/>
+                    <TextBox x:Name="bucatipulpe1" HorizontalAlignment="Left" Height="19" Margin="70.2,117,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="43" Grid.Column="2"/>
+                    <Button x:Name="pulpe1" Content="Adauga" Grid.Column="2" HorizontalAlignment="Left" Margin="121.2,96,0,0" VerticalAlignment="Top" Width="58" Height="33" Click="pulpe1_click" Background="Crimson" BorderBrush="Crimson">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="15"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <TextBox x:Name="pretsnitel1" HorizontalAlignment="Left" Height="16" Margin="208.2,96,0,0" TextWrapping="Wrap" Text="27" VerticalAlignment="Top" Width="29" IsEnabled="False" Grid.Column="2" RenderTransformOrigin="0.648,-0.075"/>
+                    <TextBox x:Name="bucatisnitel1" HorizontalAlignment="Left" Height="19" Margin="208.2,117,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="43" Grid.Column="2"/>
+                    <Button x:Name="snitel1" Content="Adauga" Grid.Column="2" HorizontalAlignment="Left" Margin="251.2,96,0,0" VerticalAlignment="Top" Width="54" Height="33" Click="snite1_click" Background="Crimson" BorderBrush="Crimson">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="15"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <TextBox x:Name="pretcb1" HorizontalAlignment="Left" Height="16" Margin="10,230,0,0" TextWrapping="Wrap" Text="17" VerticalAlignment="Top" Width="30" IsEnabled="False" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="bucaticb1" HorizontalAlignment="Left" Height="18" Margin="10,251,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="43" Grid.ColumnSpan="2"/>
+                    <Button x:Name="cb1" Content="Adauga" HorizontalAlignment="Left" Margin="18.2,237,0,0" VerticalAlignment="Top" Width="53" Height="35" Click="cb1_click" Background="Crimson" BorderBrush="Crimson" Grid.Column="1">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="15"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <TextBox x:Name="pretct1" HorizontalAlignment="Left" Height="16" Margin="84.2,233,0,0" TextWrapping="Wrap" Text="17" VerticalAlignment="Top" Width="30" IsEnabled="False" Grid.Column="1"/>
+                    <TextBox x:Name="bucatict1" HorizontalAlignment="Left" Height="18" Margin="83.2,254,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="43" Grid.Column="1"/>
+                    <Button x:Name="ct1" Content="Adauga" HorizontalAlignment="Left" Margin="5.2,237,0,0" VerticalAlignment="Top" Width="57" Height="35" Grid.Column="2" Click="ct1_click" Background="Crimson" BorderBrush="Crimson">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="15"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <TextBox x:Name="pretapa1" HorizontalAlignment="Left" Height="16" Margin="10,355,0,0" TextWrapping="Wrap" Text="7" VerticalAlignment="Top" Width="30" IsEnabled="False" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="bucatiapa1" HorizontalAlignment="Left" Height="18" Margin="10,374,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="43" Grid.ColumnSpan="2"/>
+                    <Button x:Name="apa1" Content="Adauga" HorizontalAlignment="Left" Margin="13.2,357,0,0" VerticalAlignment="Top" Width="51" Height="35" Click="apa1_click" Background="Crimson" BorderBrush="Crimson" Grid.Column="1">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="15"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <TextBox x:Name="pretbere1" HorizontalAlignment="Left" Height="16" Margin="83.2,357,0,0" TextWrapping="Wrap" Text="12" VerticalAlignment="Top" Width="30" IsEnabled="False" Grid.Column="1"/>
+                    <TextBox x:Name="bucatibere1" HorizontalAlignment="Left" Height="18" Margin="80.2,374,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="43" Grid.Column="1"/>
+                    <Button x:Name="bere1" Content="Adauga" HorizontalAlignment="Left" Margin="0.2,357,0,0" VerticalAlignment="Top" Width="52" Height="35" Grid.Column="2" Click="bere1_click" Background="Crimson" BorderBrush="Crimson">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="15"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <TextBox x:Name="pretsuc" HorizontalAlignment="Left" Height="16" Margin="70.2,355,0,0" TextWrapping="Wrap" Text="11" VerticalAlignment="Top" Width="30" IsEnabled="False" Grid.Column="2"/>
+                    <TextBox x:Name="bucatisuc" HorizontalAlignment="Left" Height="18" Margin="70.2,374,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="43" Grid.Column="2"/>
+
+                    <Button x:Name="suc" Content="Adauga" HorizontalAlignment="Left" Margin="121.2,357,0,0" VerticalAlignment="Top" Width="58" Height="35" Grid.Column="2" Click="suc_click" Background="Crimson" BorderBrush="Crimson">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="15"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button Content="Tipareste bon" Grid.Column="2" HorizontalAlignment="Left" Margin="409.2,322,0,0" VerticalAlignment="Top" Width="139" Height="53" Click="tipareste_bon_click" Background="Crimson" BorderBrush="Crimson">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="15"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button x:Name="logout" Content="Deconectare" Grid.Column="2" HorizontalAlignment="Left" Margin="507.2,12,0,0" VerticalAlignment="Top" Width="75" Height="42" Background="Crimson" Click="logout_click">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="15"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+
+
+
+
+
+                </Grid>
+
+            </TabItem>
+
+        </TabControl>
+    </Grid>
+</Window>

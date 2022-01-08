@@ -1,0 +1,211 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Jacques_Gourmand"
+        xmlns:RestaurantModel="clr-namespace:RestaurantModel;assembly=RestaurantModel" x:Class="Jacques_Gourmand.AdminWindow"
+        mc:Ignorable="d"
+        Title="AdminWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    <Window.Resources>
+        <CollectionViewSource x:Key="produseViewSource" d:DesignSource="{d:DesignInstance {x:Type RestaurantModel:Produse}, CreateList=True}"/>
+        <CollectionViewSource x:Key="angajatiViewSource" d:DesignSource="{d:DesignInstance {x:Type RestaurantModel:Angajati}, CreateList=True}"/>
+        <CollectionViewSource x:Key="meniuViewSource" d:DesignSource="{d:DesignInstance {x:Type RestaurantModel:Meniu}, CreateList=True}"/>
+        <CollectionViewSource x:Key="comenziViewSource" d:DesignSource="{d:DesignInstance {x:Type RestaurantModel:Comenzi}, CreateList=True}"/>
+        <ControlTemplate x:Key="validationTemplate">
+            <DockPanel>
+                <TextBlock Foreground="Red" FontSize="20">!</TextBlock>
+                <AdornedElementPlaceholder/>
+            </DockPanel>
+        </ControlTemplate>
+        <Style x:Key="textBoxInError" TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)/ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#FFE7DCDE">
+        <TabControl HorizontalAlignment="Left" Height="420" VerticalAlignment="Top" Width="784" Background="#FFE7DCDE">
+            <TabItem Header="Inventar" Margin="-2,-2,-3.8,-0.2">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="Crimson" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <Grid Background="#FFE7DCDE" DataContext="{StaticResource produseViewSource}" Margin="10,-26,3.4,2.2">
+                    <DataGrid x:Name="produseDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="373,160,34,147.6" RowDetailsVisibilityMode="VisibleWhenSelected">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="prodCantitateColumn" Binding="{Binding ProdCantitate}" Header="Prod Cantitate" Width="SizeToHeader" Foreground="Crimson"/>
+                            <DataGridTextColumn x:Name="prodCategColumn" Binding="{Binding ProdCateg}" Header="Prod Categ" Width="SizeToHeader" Foreground="Crimson"/>
+                            <DataGridTextColumn x:Name="prodIdColumn" Binding="{Binding ProdId}" Header="Prod Id" Width="SizeToHeader" Foreground="Crimson"/>
+                            <DataGridTextColumn x:Name="prodNumeColumn" Binding="{Binding ProdNume}" Header="Prod Nume" Width="SizeToHeader" Foreground="Crimson"/>
+                            <DataGridTextColumn x:Name="prodPretColumn" Binding="{Binding ProdPret}" Header="Prod Pret" Width="SizeToHeader" Foreground="Crimson"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Content="Adauga" HorizontalAlignment="Left" Margin="270,141,0,0" VerticalAlignment="Top" Width="75" BorderThickness="1" Click="add_click" Background="Crimson" BorderBrush="Crimson" Height="37">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="15"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button Content="Editeaza" HorizontalAlignment="Left" Margin="270,209,0,0" VerticalAlignment="Top" Width="75" Click="edit_click" Background="Crimson" BorderBrush="Crimson" Height="38" RenderTransformOrigin="0.471,-0.447">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="15"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button Content="Sterge" HorizontalAlignment="Left" Margin="270,276,0,0" VerticalAlignment="Top" Width="75" Click="delete_click" Background="Crimson" BorderBrush="Crimson" Height="38">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="15"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Grid x:Name="grid1" HorizontalAlignment="Left" Margin="10,141,0,0" VerticalAlignment="Top" Height="173" Width="260">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Cantitate:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+                        <TextBox x:Name="cantitate" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding ProdCantitate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="Categorie:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+                        <TextBox x:Name="categorie" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1"  Text="{Binding ProdCateg, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" Validation.ErrorTemplate="{StaticResource validationTemplate}" Style="{StaticResource textBoxInError}">
+
+                            
+                        </TextBox>
+                        <Label Content="Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+                        <TextBox x:Name="id" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding ProdId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" IsEnabled="True" IsUndoEnabled="True"/>
+                        <Label Content="Nume produs:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+                        <TextBox x:Name="nume" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding ProdNume, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" />
+                        <Label Content="Pret:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+                        <TextBox x:Name="pret" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="4" Text="{Binding ProdPret, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                    </Grid>
+                    <Label Content="Inventar" HorizontalAlignment="Left" Margin="75,31,0,0" VerticalAlignment="Top" Height="43" Width="107" FontSize="25"/>
+                    <Button x:Name="next" Content="Urmatorul" HorizontalAlignment="Left" Margin="659,276,0,0" VerticalAlignment="Top" Width="72" Click="next_click" Height="38" Background="Crimson">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="15"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Angajati" Margin="7.8,-2,-24.8,-0.2">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="Crimson" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <Grid Background="#FFE7DCDE" DataContext="{StaticResource angajatiViewSource}" Margin="-20,-25,-21.2,-13.4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24*"/>
+                        <ColumnDefinition Width="127*"/>
+                        <ColumnDefinition Width="562*"/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="angajatiDataGrid" AutoGenerateColumns="False" Grid.Column="2" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="103,126,37.6,159.4" RowDetailsVisibilityMode="VisibleWhenSelected">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="angajatIdColumn" Binding="{Binding AngajatId}" Header="Angajat Id" Width="SizeToHeader" Foreground="Crimson"/>
+                            <DataGridTextColumn x:Name="functieColumn" Binding="{Binding Functie}" Header="Functie" Width="SizeToHeader" Foreground="Crimson"/>
+                            <DataGridTextColumn x:Name="normaColumn" Binding="{Binding Norma}" Header="Norma" Width="SizeToHeader" Foreground="Crimson"/>
+                            <DataGridTextColumn x:Name="nrTelefonColumn" Binding="{Binding NrTelefon}" Header="Nr Telefon" Width="SizeToHeader" Foreground="Crimson"/>
+                            <DataGridTextColumn x:Name="numeColumn" Binding="{Binding Nume}" Header="Nume" Width="SizeToHeader" Foreground="Crimson"/>
+                            <DataGridTextColumn x:Name="oreSuplColumn" Binding="{Binding OreSupl}" Header="Ore Supl" Width="SizeToHeader" Foreground="Crimson"/>
+                            <DataGridTextColumn x:Name="parolaColumn" Binding="{Binding Parola}" Header="Parola" Width="SizeToHeader" Foreground="Crimson"/>
+                            <DataGridTextColumn x:Name="prenumeColumn" Binding="{Binding Prenume}" Header="Prenume" Width="SizeToHeader" Foreground="Crimson"/>
+                            <DataGridTextColumn x:Name="salariuColumn" Binding="{Binding Salariu}" Header="Salariu" Width="SizeToHeader" Foreground="Crimson"/>
+                            <DataGridTextColumn x:Name="userColumn" Binding="{Binding User}" Header="User" Width="SizeToHeader" Foreground="Crimson"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Content="Adauga" Grid.Column="2" HorizontalAlignment="Left" Margin="151.4,289,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="1.517,-2.004" Click="addangajati_click" Height="42" Background="Crimson" BorderBrush="Crimson">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="15"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button Content="Editeaza" Grid.Column="2" HorizontalAlignment="Left" Margin="313,289,0,0" VerticalAlignment="Top" Width="67" RenderTransformOrigin="2.697,-2.282" Click="editangajati_click" Height="42" BorderBrush="Crimson" Background="Crimson">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="15"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button Content="Sterge" Grid.Column="2" HorizontalAlignment="Left" Margin="484.4,289,0,0" VerticalAlignment="Top" Width="61" RenderTransformOrigin="1.608,-4.351" Click="deleteangajati_click" Height="42" Background="Crimson" BorderBrush="Crimson">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="15"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Grid x:Name="grid2" Grid.Column="1" HorizontalAlignment="Left" Margin="9.8,47,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="321" Width="210">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Angajat Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+                        <TextBox x:Name="idangajat" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding AngajatId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="Functie:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+                        <TextBox x:Name="functie" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding Functie, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="Norma:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+                        <TextBox x:Name="norma" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding Norma, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="Nr Telefon:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+                        <TextBox x:Name="nrtelefon" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding NrTelefon, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="Nume:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+                        <TextBox x:Name="numeangajat" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="4" Text="{Binding Nume, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="Ore Supl:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
+                        <TextBox x:Name="oresupl" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="5" Text="{Binding OreSupl, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="Parola:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
+                        <TextBox x:Name="parolaangajat" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="6" Text="{Binding Parola, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="prenumeangajat:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="7" VerticalAlignment="Center"/>
+                        <TextBox x:Name="prenumeangajat" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="7" Text="{Binding Prenume, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="Salariu:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="8" VerticalAlignment="Center"/>
+                        <TextBox x:Name="salariu" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="8" Text="{Binding Salariu, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="User:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="9" VerticalAlignment="Center"/>
+                        <TextBox x:Name="user" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="9" Text="{Binding User, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                    </Grid>
+                    <Button x:Name="next2" Content="Urmatorul" Grid.Column="2" HorizontalAlignment="Left" Margin="535.4,371,0,0" VerticalAlignment="Top" Width="73" Height="30" Background="Crimson" Click="next2_click">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="15"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+        <Button x:Name="logout" Content="Deconectare" HorizontalAlignment="Left" Margin="691,10,0,0" VerticalAlignment="Top" Width="93" Height="43" Click="logout_click" RenderTransformOrigin="0.469,0.898" BorderBrush="Crimson" Background="Crimson">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="15"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+    </Grid>
+</Window>
